@@ -1,0 +1,37 @@
+vault_version: "1.7.0"
+vault_host_infrastructure: "arm64"
+vault_file: vault_{{ vault_version }}_linux_{{ vault_host_infrastructure }}.zip
+vault_src: "https://releases.hashicorp.com/vault/{{ vault_version }}/{{ vault_file }}"
+vault_checksums_url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_SHA256SUMS"
+vault_checksums_file: "/tmp/checksums"
+vault_download_path: /tmp/vault.zip
+vault_bin_path: "/usr/local/bin"
+vault_bin: "/usr/local/bin/vault"
+vault_conf: "/etc/vault.d/vault.hcl"
+vault_log: "/var/log/vault/vault.log"
+tls_disable: 1
+service_name: "vault"
+vault_addr: "{{ ansible_fqdn }}"
+vault_port: 8200
+vault_cluster_port: 8201
+vault_user: "vault"
+vault_uid: "8201"
+vault_group: "vault"
+vault_gid: "8201"
+vault_service: "vault"
+vault_raft_path: "/opt/vault/"
+vault_profile: "/etc/profile.d/vault.sh"
+
+
+
+# vault_cn: "{{ ansible_fqdn }}"
+# vault_cc: "UK"
+# vault_on: "Vault"
+# vault_privkey: "{{ vault_certs }}/{{ ansible_fqdn | regex_replace('^www\\.', '') }}.pem"
+# vault_csr: "{{ vault_certs }}/{{ ansible_fqdn }}.csr"
+# vault_certfile: "{{ vault_certs }}/{{ ansible_fqdn | regex_replace('^www\\.', '') }}.crt"
+# vault_certfile_name: "{{ ansible_fqdn | regex_replace('^www\\.', '') }}.crt"
+# vault_privkey_name: "{{ ansible_fqdn | regex_replace('^www\\.', '') }}.pem"
+# vault_cert_storage: "~/vault_certs"
+# vault_certs_os: "/etc/ssl/certs/"
+# vault_base_ip: "192.168.1."

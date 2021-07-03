@@ -1,0 +1,26 @@
+---
+
+- name: Install & configure HashiCorp Vault
+  hosts: localhost
+  become: yes
+  gather_facts: yes
+
+  roles:
+
+  #   - name: Uninstall Vault
+  #     role: ansible-role-vault-uninstall
+    
+     - name: Install Vault
+       role: ansible-role-vault-install
+
+     - name: Start Vault
+       role: ansible-role-vault-start
+
+     - name: Init Vault
+       role: ansible-role-vault-init
+
+  #  - name: Unseal Vault
+  #     role: ansible-role-vault-unseal
+    
+  #   - name: change text
+  #     role: ansible-role-vault-change
