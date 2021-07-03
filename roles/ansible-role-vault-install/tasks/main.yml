@@ -64,8 +64,7 @@
       group: "{{ vault_group }}"
     with_items:
       - "{{ vault_raft_path }}"
-      - "{{ vault_integrated_path }}"
-
+      
   - name: Create conf
     file:
       state: touch
