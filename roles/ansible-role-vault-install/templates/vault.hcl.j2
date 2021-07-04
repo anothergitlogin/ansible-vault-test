@@ -7,10 +7,6 @@ listener "tcp" {
 api_addr = "http://{{ ansible_fqdn }}:{{ vault_port }}"
 cluster_addr = "http://{{ ansible_fqdn }}:{{ vault_cluster_port }}"
 
-seal "awskms" {
-  region     = "{{ vault_region }}"
-  kms_key_id = "{{ kms_key }}"
-}
 disable_mlock = true
 storage "raft" {
   path = "{{ vault_raft_path }}"
