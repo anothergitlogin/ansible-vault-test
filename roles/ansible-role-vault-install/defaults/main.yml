@@ -11,7 +11,7 @@ vault_conf: "/etc/vault.d/vault.hcl"
 vault_log: "/var/log/vault/vault.log"
 tls_disable: 1
 service_name: "vault"
-vault_addr: "{{ ansible_fqdn }}"
+vault_addr: "127.0.0.1"
 vault_port: 8200
 vault_cluster_port: 8201
 vault_user: "vault"
