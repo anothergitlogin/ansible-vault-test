@@ -33,6 +33,8 @@
       src: "{{ vault_download_path }}"
       dest: "{{ vault_bin_path }}"
       remote_src: true
+      mode: 0660
+
   
   - name: Clean Up
     file:
