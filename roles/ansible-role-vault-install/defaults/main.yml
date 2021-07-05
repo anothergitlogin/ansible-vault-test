@@ -1,6 +1,12 @@
 vault_version: "1.7.0"
-vault_host_infrastructure: "arm64"
-vault_file: vault_{{ vault_version }}_linux_{{ vault_host_infrastructure }}.zip
+vault_host_infrastructure:
+  # this first entry seems... redundant (but it's required for reasons)
+  amd64: amd64
+  x86_64: amd64
+  armv7l: arm
+  aarch64: arm64
+vault_architecture: "{{ vault_host_infrastructure[ansible_architecture] }}"
+vault_file: vault_{{ vault_version }}_linux_{{ vault_architecture }}.zip
 vault_src: "https://releases.hashicorp.com/vault/{{ vault_version }}/{{ vault_file }}"
 vault_checksums_url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_SHA256SUMS"
 vault_checksums_file: "/tmp/checksums"
@@ -11,7 +17,7 @@ vault_conf: "/etc/vault.d/vault.hcl"
 vault_log: "/var/log/vault/vault.log"
 tls_disable: 1
 service_name: "vault"
-vault_addr: "127.0.0.1"
+vault_addr: "{{ ansible_fqdn }}"
 vault_port: 8200
 vault_cluster_port: 8201
 vault_user: "vault"
@@ -21,6 +27,7 @@ vault_gid: "8201"
 vault_service: "vault"
 vault_raft_path: "/opt/vault/"
 vault_profile: "/etc/profile.d/vault.sh"
+vault_checksum_file_url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version}}_SHA256SUMS"
 
 
 
