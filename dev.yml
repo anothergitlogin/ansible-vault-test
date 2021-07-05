@@ -16,8 +16,8 @@
      - name: Start Vault
        role: ansible-role-vault-start
 
-     - name: Init Vault
-       role: ansible-role-vault-init
+  #   - name: Init Vault
+  #     role: ansible-role-vault-init
 
   #  - name: Unseal Vault
   #     role: ansible-role-vault-unseal
