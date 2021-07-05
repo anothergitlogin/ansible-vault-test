@@ -22,11 +22,8 @@
       system: yes
 
   - name: Add Permissions
-    ansible.builtin.shell:
+    shell: |
       sudo chmod +x /usr/local/bin/vault
- 
-  - name: Create directory
-    ansible.builtin.shell:
       sudo chown vault:vault /usr/local/bin/vault
       sudo mkdir -pm 0755 /etc/vault.d
       sudo mkdir -pm 0755 /etc/ssl/vault
@@ -57,10 +54,11 @@
       mode: 0660
 
   - name: Extract vault.zip
-    ansible.builtin.unarchive:
-      src: "{{ vault_download_path }}"
-      dest: "{{ vault_bin_path }}"
-      remote_src: true
+    shell: |
+      sudo unzip -o /tmp/vault.zip -d /usr/local/bin/
+      sudo chmod 0755 /usr/local/bin/vault
+      sudo chown vault:Vault /usr/local/bin/vault
+
 
   - name: Clean Up
     file:
