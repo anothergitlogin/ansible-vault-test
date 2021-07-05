@@ -62,3 +62,37 @@
   run_once: true
   tags: installation
   delegate_to: 127.0.0.1
+
+
+
+ - name: Create vault server configuration
+    template:
+      src: vault.hcl.j2
+      dest: "{{ vault_conf }}"
+      owner: "{{ vault_user }}"
+      group: "{{ vault_group }}"
+      mode: 0640
+
+  - name: Create vault systemd service config
+    template:
+      src: vault.service.j2
+      dest: "/etc/systemd/system/{{ vault_service }}.service"
+      owner: vault
+      group: vault
+      mode: 0664
+      force: no
+
+  - name: Start and enable vault systemd service
+    systemd:
+      name: "{{ vault_service }}"
+      daemon_reload: yes
+      state: started
+      enabled: yes
+
+  - name: Set VAULT_ADDR listener in profile
+    template:
+      src: profile.sh.j2
+      dest: /etc/profile.d/vault.sh
+      owner: root
+      group: root
+      mode: 0755
