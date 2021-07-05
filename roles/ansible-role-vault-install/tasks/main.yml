@@ -17,9 +17,9 @@
   #    url: "{{ vault_checksums_url }}"
   #    dest: "{{ vault_checksums_file }}"
 
-  - name: Saving checksum
-    ansible.builtin.shell: cat '{{ vault_checksums_file }}' | grep '{{ vault_file }}' | cut -c 1-64
-    register: vault_checksum
+  #- name: Saving checksum
+  #  ansible.builtin.shell: cat '{{ vault_checksums_file }}' | grep '{{ vault_file }}' | cut -c 1-64
+  #  register: vault_checksum
 
   - name: Download Vault
     get_url:
