@@ -28,7 +28,7 @@
       mode: 0660
       checksum: "sha256:{{ vault_checksum.stdout }}"
 
-  - name: Extract vault.zip
+  - name: Extract vault
     ansible.builtin.unarchive:
       src: "{{ vault_download_path }}"
       dest: "{{ vault_bin_path }}"
