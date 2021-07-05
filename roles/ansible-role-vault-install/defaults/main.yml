@@ -6,6 +6,7 @@ vault_host_infrastructure:
   armv7l: arm
   aarch64: arm64
 vault_architecture: "{{ vault_host_infrastructure[ansible_architecture] }}"
+vault_os: "{{ ansible_system|lower }}"
 vault_file: vault_{{ vault_version }}_linux_{{ vault_architecture }}.zip
 vault_src: "https://releases.hashicorp.com/vault/{{ vault_version }}/{{ vault_file }}"
 vault_checksums_url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version }}_SHA256SUMS"
