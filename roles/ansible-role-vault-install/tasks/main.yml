@@ -12,10 +12,10 @@
       - libldns-dev
       - libbotan-2-dev
 
-  - name: Download Checksums
-    ansible.builtin.get_url:
-      url: "{{ vault_checksums_url }}"
-      dest: "{{ vault_checksums_file }}"
+  #- name: Download Checksums
+  #  ansible.builtin.get_url:
+  #    url: "{{ vault_checksums_url }}"
+  #    dest: "{{ vault_checksums_file }}"
 
   - name: Saving checksum
     ansible.builtin.shell: cat '{{ vault_checksums_file }}' | grep '{{ vault_file }}' | cut -c 1-64
