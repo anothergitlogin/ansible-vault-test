@@ -30,6 +30,8 @@ vault_raft_path: "/opt/vault/"
 vault_profile: "/etc/profile.d/vault.sh"
 vault_checksum_file_url: "https://releases.hashicorp.com/vault/{{ vault_version }}/vault_{{ vault_version}}_SHA256SUMS"
 role_path: "/tmp/"
+vault_privileged_install: false
+
 
 
 
