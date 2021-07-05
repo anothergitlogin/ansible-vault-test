@@ -11,32 +11,8 @@
       - libxml2-dev
       - libldns-dev
       - libbotan-2-dev
-
-  - name: Download Vault
-    get_url:
-      url: "{{ vault_src }}"
-      dest: "{{ vault_download_path }}"
-      mode: 0660
-
-  - name: Extract vault.zip
-    ansible.builtin.unarchive:
-      src: "{{ vault_download_path }}"
-      dest: "{{ vault_bin_path }}"
-      remote_src: true
-
-  - name: Clean Up
-    file:
-      state: absent
-      path: "{{ item }}"
-    with_items:
-      - "{{ vault_download_path }}"
-
-  - name: Create group vault
-    group:
-      name: "{{ vault_group }}"
-      gid: "{{ vault_gid }}"
-      state: present
-
+      
+      
   - name: Create user vault
     user:
       name: "{{ vault_user }}"
@@ -73,6 +49,33 @@
       owner: vault
       group: vault
       path: "{{ vault_conf }}"
+
+  - name: Download Vault
+    get_url:
+      url: "{{ vault_src }}"
+      dest: "{{ vault_download_path }}"
+      mode: 0660
+
+  - name: Extract vault.zip
+    ansible.builtin.unarchive:
+      src: "{{ vault_download_path }}"
+      dest: "{{ vault_bin_path }}"
+      remote_src: true
+
+  - name: Clean Up
+    file:
+      state: absent
+      path: "{{ item }}"
+    with_items:
+      - "{{ vault_download_path }}"
+
+  - name: Create group vault
+    group:
+      name: "{{ vault_group }}"
+      gid: "{{ vault_gid }}"
+      state: present
+
+  
 
 #  - name: Install PIP3
 #    package:
