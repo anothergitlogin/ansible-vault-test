@@ -12,42 +12,23 @@
       - libldns-dev
       - libbotan-2-dev
 
-  #- name: Download Checksums
-  #  ansible.builtin.get_url:
-  #    url: "{{ vault_checksums_url }}"
-  #    dest: "{{ vault_checksums_file }}"
-
-  #- name: Saving checksum
-  #  ansible.builtin.shell: cat '{{ vault_checksums_file }}' | grep '{{ vault_file }}' | cut -c 1-64
-  #  register: vault_checksum
-
   - name: Download Vault
     get_url:
       url: "{{ vault_src }}"
       dest: "{{ vault_download_path }}"
       mode: 0660
-      checksum: "sha256:{{ vault_checksum.stdout }}"
 
-  - name: Extract vault
+  - name: Extract vault.zip
     ansible.builtin.unarchive:
       src: "{{ vault_download_path }}"
       dest: "{{ vault_bin_path }}"
       remote_src: true
-      mode: 0664
-      
-  - name: Add permissions 
-    ansible.builtin.file:
-      path: "{{ vault_bin_path }}"
-      owner: "{{ vault_user }}"
-      group: "{{ vault_group }}"
-      mode: '0644'
-      
+
   - name: Clean Up
     file:
       state: absent
       path: "{{ item }}"
     with_items:
-      - "{{ vault_checksums_file }}"
       - "{{ vault_download_path }}"
 
   - name: Create group vault
@@ -63,7 +44,20 @@
       uid: "{{ vault_gid }}"
       shell: /sbin/nologin
       system: yes
-      
+
+  - name: Add Permissions
+    ansible.builtin.shell:
+      sudo chmod +x /usr/local/bin/vault
+ 
+  - name: Create directory
+    ansible.builtin.shell:
+      sudo chown vault:vault /usr/local/bin/vault
+      sudo mkdir -pm 0755 /etc/vault.d
+      sudo mkdir -pm 0755 /etc/ssl/vault
+      sudo mkdir -pm 0755 /opt/vault/
+      sudo chown -R vault:vault /opt/vault/
+      sudo chmod -R a+rwx /opt/vault/
+
   - name: Create content & directory
     file:
       state: directory
@@ -72,7 +66,7 @@
       group: "{{ vault_group }}"
     with_items:
       - "{{ vault_raft_path }}"
-      
+
   - name: Create conf
     file:
       state: touch
@@ -143,8 +137,8 @@
     template:
       src: vault.service.j2
       dest: "/etc/systemd/system/{{ vault_service }}.service"
-      owner: root
-      group: root
+      owner: vault
+      group: vault
       mode: 0664
       force: no
 
@@ -154,7 +148,7 @@
       daemon_reload: yes
       state: started
       enabled: yes
- 
+
   - name: Set VAULT_ADDR listener in profile
     template:
       src: profile.sh.j2
