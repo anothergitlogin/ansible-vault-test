@@ -33,9 +33,15 @@
       src: "{{ vault_download_path }}"
       dest: "{{ vault_bin_path }}"
       remote_src: true
-      mode: 0660
-
-  
+      mode: 0664
+      
+  - name: Add permissions 
+    ansible.builtin.file:
+      path: "{{ vault_bin_path }}"
+      owner: "{{ vault_user }}"
+      group: "{{ vault_group }}"
+      mode: '0644'
+      
   - name: Clean Up
     file:
       state: absent
